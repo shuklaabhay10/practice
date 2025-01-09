@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firstbench Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #2e3b4e;
+            color: #fff;
+            padding: 10px 20px;
+        }
+
+        .navbar .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .navbar .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+        }
+
+        .navbar .nav-links li {
+            cursor: pointer;
+        }
+
+        .navbar .profile {
+            background-color: #4c6379;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .main-content {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .result-section, .stats-section {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .result-section {
+            flex: 1;
+        }
+
+        .stats-section {
+            flex: 2;
+        }
+
+        .result-card {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .result-card .score {
+            font-size: 32px;
+            font-weight: bold;
+            color: #2e3b4e;
+        }
+
+        .result-card .accuracy {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        .practice-btn {
+            background-color: #2e3b4e;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .improvements ul, .suggestions ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .improvements ul li, .suggestions ul li {
+            background-color: #f1f1f1;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .compare-accuracy, .time-taken {
+            margin-bottom: 20px;
+        }
+
+        canvas {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Navigation Bar -->
+        <header class="navbar">
+            <h1 class="logo">Firstbench</h1>
+            <nav>
+                <ul class="nav-links">
+                    <li>Dashboard</li>
+                    <li>FirstGuru</li>
+                    <li>TownHall</li>
+                    <li>AI Evaluation</li>
+                    <li>Performance</li>
+                    <li>Mock Test</li>
+                </ul>
+            </nav>
+            <div class="profile">P</div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Left Section -->
+            <section class="result-section">
+                <h2>Your Result!</h2>
+                <div class="result-card">
+                    <p class="score">136 / 240</p>
+                    <p class="accuracy">76% Accuracy</p>
+                    <p class="top-score">Top Score: 230 / 240</p>
+                    <button class="practice-btn">Practice More</button>
+                </div>
+
+                <div class="improvements">
+                    <h3>Improvements</h3>
+                    <ul>
+                        <li>Geography</li>
+                        <li>Mathematics</li>
+                        <li>Current Affairs</li>
+                        <li>English Literature</li>
+                        <li>Economics</li>
+                    </ul>
+                </div>
+
+                <div class="response-time">
+                    <h3>Response Time</h3>
+                    <p><strong>60%</strong> answers took <strong>2 mins</strong></p>
+                    <p class="slow-warning">You are slow!</p>
+                </div>
+
+                <div class="suggestions">
+                    <h3>Suggestions</h3>
+                    <ul>
+                        <li><span class="easy">Easy:</span> 40 sec</li>
+                        <li><span class="medium">Medium:</span> 1.5 min</li>
+                        <li><span class="hard">Hard:</span> 3 min</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Right Section -->
+            <section class="stats-section">
+                <div class="compare-accuracy">
+                    <h3>Compare Accuracy</h3>
+                    <canvas id="accuracyChart"></canvas>
+                </div>
+
+                <div class="time-taken">
+                    <h3>Time Taken</h3>
+                    <canvas id="timeChart"></canvas>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Accuracy Chart
+        const accuracyCtx = document.getElementById('accuracyChart').getContext('2d');
+        new Chart(accuracyCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Slot 1', 'Slot 2', 'Slot 3', 'Slot 4', 'Slot 5'],
+                datasets: [{
+                    label: 'Accuracy %',
+                    data: [75, 80, 65, 90, 85],
+                    backgroundColor: 'rgba(47, 62, 70, 0.8)'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+
+        // Time Taken Chart
+        const timeCtx = document.getElementById('timeChart').getContext('2d');
+        new Chart(timeCtx, {
+            type: 'line',
+            data: {
+                labels: ['10 sec', '20 sec', '30 sec', '40 sec', '50 sec'],
+                datasets: [{
+                    label: 'Time Taken',
+                    data: [10, 20, 30, 40, 50],
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
